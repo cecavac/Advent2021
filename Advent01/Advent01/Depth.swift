@@ -13,17 +13,10 @@ class Depth {
         var result = 0
 
         for i in windowWidth..<lines.count {
-            var previousDepth = 0
-            var currentDepth = 0
+            let previous = Int(String(lines[i - windowWidth]))!
+            let current = Int(String(lines[i]))!
 
-            for j in i - windowWidth...i - 1 {
-                previousDepth += Int(String(lines[j]))!
-            }
-            for j in i - windowWidth + 1...i {
-                currentDepth += Int(String(lines[j]))!
-            }
-
-            if currentDepth > previousDepth {
+            if current > previous {
                 result += 1
             }
         }
