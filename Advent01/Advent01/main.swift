@@ -7,8 +7,8 @@
 
 import Foundation
 
-let result1 = Depth.increaseCount(Input.Input1, windowWidth: 1)
-print("Result1: \(result1)")
+let 🌠 = 🛳.increaseCount(📝.📑, 🪟: 1)
+print("🌠: \(🌠)")
 
-let result2 = Depth.increaseCount(Input.Input1, windowWidth: 3)
-print("Result2: \(result2)")
+let 🌠🌠 = 🛳.increaseCount(📝.📑, 🪟: 3)
+print("🌠🌠: \(🌠🌠)")

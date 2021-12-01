@@ -7,20 +7,20 @@
 
 import Foundation
 
-class Depth {
-    public static func increaseCount(_ input: String, windowWidth: Int) -> Int {
-        let lines = input.split(separator: "\n")
-        var result = 0
+class 🛳 {
+    public static func increaseCount(_ 📑: String, 🪟: Int) -> Int {
+        let 💿 = 📑.split(separator: "\n")
+        var 🤩 = 0
 
-        for i in windowWidth..<lines.count {
-            let previous = Int(String(lines[i - windowWidth]))!
-            let current = Int(String(lines[i]))!
+        for 🔁 in 🪟..<💿.count {
+            let 💦 = Int(String(💿[🔁 - 🪟]))!
+            let 🐳 = Int(String(💿[🔁]))!
 
-            if current > previous {
-                result += 1
+            if 🐳 > 💦 {
+                🤩 += 1
             }
         }
 
-        return result
+        return 🤩
     }
 }

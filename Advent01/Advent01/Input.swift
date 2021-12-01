@@ -7,8 +7,8 @@
 
 import Foundation
 
-class Input {
-    public static let Input1 = """
+class 📝 {
+    public static let 📑 = """
 148
 167
 168
