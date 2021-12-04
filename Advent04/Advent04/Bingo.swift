@@ -9,7 +9,6 @@ import Foundation
 
 class Bingo {
     var numbers = [Int]()
-    var numberCounter = 0
     var boards = [Board]()
 
     init(_ input: String) {
@@ -33,12 +32,11 @@ class Bingo {
     func play() -> Int {
         var score = 0
 
-        for i in numberCounter..<numbers.count {
-            numberCounter += 1
-
+        while numbers.count > 0 {
+            let number = numbers.removeFirst()
             for board in boards {
-                board.draw(numbers[i])
-                if board.combinationFound {
+                board.draw(number)
+                if board.won {
                     score = board.score
                 }
             }
@@ -57,7 +55,7 @@ class Bingo {
 
             var nonWinningBoards = [Board]()
             for board in boards {
-                if !board.combinationFound {
+                if !board.won {
                     nonWinningBoards.append(board)
                 }
             }

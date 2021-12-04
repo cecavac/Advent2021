@@ -13,8 +13,8 @@ class Board {
         var drawn = false
     }
 
-    var numbers = [[Number]]()
-    var combinationFound = false
+    private var numbers = [[Number]]()
+    var won = false
     var score = 0
 
     init(_ input: String) {
@@ -30,47 +30,41 @@ class Board {
         }
     }
 
-    func calculateScore(winningNumber: Int) {
-        var unmatchSum = 0
+    private func calculateScore(winningNumber: Int) {
+        var sumOfUnmatched = 0
 
-        for i in 0..<5 {
-            for j in 0..<5 {
+        for i in numbers.indices {
+            for j in numbers.first!.indices {
                 if !numbers[i][j].drawn {
-                    unmatchSum += numbers[i][j].value
+                    sumOfUnmatched += numbers[i][j].value
                 }
             }
         }
 
-        score = unmatchSum * winningNumber
+        score = sumOfUnmatched * winningNumber
     }
 
-    func checkStatus(row: Int, column: Int) {
-        var matchFound = true
-
-        for j in 0..<5 {
-            matchFound = matchFound && numbers[row][j].drawn
+    private func findCombination(row: Int, column: Int) -> Bool {
+        var rowMatch = true
+        for j in numbers.first!.indices {
+            rowMatch = rowMatch && numbers[row][j].drawn
         }
 
-        if matchFound {
-            combinationFound = true
-            return
+        var columnMatch = true
+        for i in numbers.indices {
+            columnMatch = columnMatch && numbers[i][column].drawn
         }
 
-        matchFound = true
-        for i in 0..<5 {
-            matchFound = matchFound && numbers[i][column].drawn
-        }
-
-        combinationFound = matchFound
+        return rowMatch || columnMatch
     }
 
     func draw(_ value: Int) {
-        for i in 0..<5 {
-            for j in 0..<5 {
+        for i in numbers.indices {
+            for j in numbers.first!.indices {
                 if numbers[i][j].value == value {
                     numbers[i][j].drawn = true
-                    checkStatus(row: i, column: j)
-                    if combinationFound {
+                    if findCombination(row: i, column: j) {
+                        won = true
                         calculateScore(winningNumber: value)
                     }
                     return
