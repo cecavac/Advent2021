@@ -30,36 +30,24 @@ class Bingo {
     }
 
     func play() -> Int {
-        var score = 0
-
         while numbers.count > 0 {
             let number = numbers.removeFirst()
             for board in boards {
                 board.draw(number)
-                if board.won {
-                    score = board.score
-                }
             }
 
-            if score != 0 {
-                return score
+            if let winner = boards.filter({ $0.won }).first {
+                return winner.score
             }
         }
 
-        return score
+        return 0
     }
 
     func playToTheEnd() -> Int {
         while boards.count != 1 {
             _ = play()
-
-            var nonWinningBoards = [Board]()
-            for board in boards {
-                if !board.won {
-                    nonWinningBoards.append(board)
-                }
-            }
-            boards = nonWinningBoards
+            boards = boards.filter { !$0.won }
         }
 
         return play()

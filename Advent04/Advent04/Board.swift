@@ -46,13 +46,11 @@ class Board {
 
     private func findCombination(row: Int, column: Int) -> Bool {
         var rowMatch = true
-        for j in numbers.first!.indices {
-            rowMatch = rowMatch && numbers[row][j].drawn
-        }
-
         var columnMatch = true
-        for i in numbers.indices {
-            columnMatch = columnMatch && numbers[i][column].drawn
+
+        for z in numbers.first!.indices {
+            rowMatch = rowMatch && numbers[row][z].drawn
+            columnMatch = columnMatch && numbers[z][column].drawn
         }
 
         return rowMatch || columnMatch
