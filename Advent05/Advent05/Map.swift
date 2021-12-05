@@ -33,22 +33,21 @@ class Map {
                     }
                 }
             } else if withDiagonals {
-                let length = abs(leftX - rightX)
-
-                var directionX = 0
+                var directionX: Int
                 if rightX < leftX {
                     directionX = 1
                 } else {
                     directionX = -1
                 }
 
-                var directionY = 0
+                var directionY: Int
                 if rightY < leftY {
                     directionY = 1
                 } else {
                     directionY = -1
                 }
 
+                let length = abs(leftX - rightX)
                 for n in 0...length {
                     let x = rightX + (directionX * n)
                     let y = rightY + (directionY * n)
@@ -65,14 +64,6 @@ class Map {
     }
 
     func getOverlaps() -> Int {
-        var result = 0
-
-        for (_, value) in map {
-            if value > 1 {
-                result += 1
-            }
-        }
-
-        return result
+        return map.filter({ $0.value > 1 }).count
     }
 }
