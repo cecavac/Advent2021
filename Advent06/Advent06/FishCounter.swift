@@ -25,10 +25,6 @@ class FishCounter {
             stages.append(fishGivingBirth)
         }
 
-        var fishSum = 0
-        for fish in stages {
-            fishSum += fish
-        }
-        return fishSum
+        return stages.reduce(0, +)
     }
 }
