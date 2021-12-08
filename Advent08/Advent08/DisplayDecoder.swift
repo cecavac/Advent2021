@@ -11,12 +11,14 @@ class DisplayDecoder {
     /*
      Associated display segment indexes
 
-     |0 _4 |2
+        _4
+     |0    |2
         _5
-     |1 _6 |3
+     |1    |3
+         _6
      */
 
-    private func decode(code: String, mapping: [Character]) -> Int {
+    private func decode(code: String, mapping: [Character]) -> Int? {
         if code.count == 2 {
             return 1
         } else if code.count == 3 {
@@ -39,7 +41,7 @@ class DisplayDecoder {
             return 5
         } else {
             print("Decoding error")
-            return -1
+            return nil
         }
     }
 
@@ -77,9 +79,8 @@ class DisplayDecoder {
 
         // Analyse 7
         for value in signals {
-            let length = String(value).count
-            if length == 3 {
-                let candidate7: Set<Character> = Set(Array(String(value)))
+            let candidate7 = Set(Array(String(value)))
+            if candidate7.count == 3 {
                 digitMappings[4] = candidate7.subtracting(Set(candidate1)).first!
                 break
             }
@@ -98,9 +99,8 @@ class DisplayDecoder {
         conditions9.insert(digitMappings[4])
 
         for value in signals {
-            if String(value).count == 6 {
-                let candidate9 = Set(Array(String(value)))
-
+            let candidate9 = Set(Array(String(value)))
+            if candidate9.count == 6 {
                 if candidate9.intersection(conditions9).count == 5 {
                     digitMappings[6] = candidate9.subtracting(conditions9).first!
                     break
@@ -112,9 +112,8 @@ class DisplayDecoder {
         let conditions3: Set<Character> = [digitMappings[2], digitMappings[3], digitMappings[4], digitMappings[6]]
 
         for value in signals {
-            if String(value).count == 5 {
-                let candidate3 = Set(Array(String(value)))
-
+            let candidate3 = Set(Array(String(value)))
+            if candidate3.count == 5 {
                 if candidate3.intersection(conditions3).count == 4 {
                     digitMappings[5] = candidate3.subtracting(conditions3).first!
                     break
@@ -133,21 +132,14 @@ class DisplayDecoder {
 
     func process(_ input: String) -> Int{
         var result = 0
+        let components = input.split(separator: "|")
+        let digitMappings = map(String(components[0]))
 
-        let lines = input.split(separator: "\n")
-        for line in lines {
-            let components = line.split(separator: "|")
-            let digitMappings = map(String(components[0]))
+        let output = components[1].split(separator: " ")
+        for value in output {
+            result *= 10
+            result += decode(code: String(value), mapping: digitMappings)!
 
-            var number = 0
-            let output = components[1].split(separator: " ")
-            for value in output {
-                number *= 10
-                number += decode(code: String(value), mapping: digitMappings)
-
-            }
-
-            result += number
         }
 
         return result
